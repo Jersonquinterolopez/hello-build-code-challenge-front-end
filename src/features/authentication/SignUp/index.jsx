@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import checkUser from '../../../services/checkUser';
 import onSubmit from '../../../services/onSubmit';
 
 const SignUp = () => {
@@ -68,7 +69,7 @@ const SignUp = () => {
                         value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                         message: 'error message',
                       },
-                      //   validate: checkUser || 'error message',
+                      validate: checkUser || 'error message',
                     })}
                   />
                   {errors.email?.type === 'validate' && (
