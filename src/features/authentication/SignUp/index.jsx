@@ -1,19 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import checkUser from '../../../services/checkUser';
-import onSubmit from '../../../services/onSubmit';
+import api from '../../../helpers/axios';
+import ErrorNotice from '../../../misc/ErrorNotice';
 
 const SignUp = () => {
   const { register, handleSubmit, errors, formState, getValues } = useForm({
     mode: 'onBlur',
   });
 
+  const [error, setError] = useState();
+
+  const onSubmit = async (data, e) => {
+    e.preventDefault();
+    try {
+      await api.post('/auth/sign-up', { user: data });
+      const { email, password } = data;
+      const loginResponse = await api.post('/auth/login', {
+        email,
+        password,
+      });
+      localStorage.setItem('user', JSON.stringify(loginResponse.data.user));
+      localStorage.setItem('token', JSON.stringify(loginResponse.data.token));
+    } catch (error) {
+      error.response.data.msg && setError(error.response.data.msg);
+    }
+  };
+
   return (
     <div className="columns is-vcentered">
       <div className="column is-one-third">
         <section className="section">
           <h4 className="title is-4 has-text-centered">Sign up</h4>
+          {error && (
+            <ErrorNotice
+              message={error}
+              clearError={() => setError(undefined)}
+            />
+          )}
           <div className="field has-addons-right">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="field">
@@ -69,14 +93,8 @@ const SignUp = () => {
                         value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                         message: 'error message',
                       },
-                      validate: checkUser || 'error message',
                     })}
                   />
-                  {errors.email?.type === 'validate' && (
-                    <p className="help is-danger">
-                      This email address is already in use
-                    </p>
-                  )}
 
                   {errors.email?.type === 'pattern' && (
                     <p className="help is-danger">

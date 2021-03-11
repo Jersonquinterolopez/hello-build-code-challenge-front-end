@@ -5,12 +5,8 @@ const checkUser = async (value) => {
     const checkUserResponse = await api.post('/auth/check-user', {
       email: value,
     });
-    const userStatus = await checkUserResponse.data.status;
-    if (userStatus === 'EXISTS') {
-      return false;
-    } else {
-      return true;
-    }
+    const userStatus = await checkUserResponse.data;
+    return userStatus;
   } catch (error) {
     console.log(error);
   }
