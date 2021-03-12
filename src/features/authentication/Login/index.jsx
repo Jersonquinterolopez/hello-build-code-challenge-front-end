@@ -28,7 +28,7 @@ const Login = () => {
 
   return (
     <div className="columns is-vcentered">
-      <div className="login column">
+      <div className="login column is-one-third">
         <section className="section">
           <h4 className="title is-4 has-text-centered">Log in</h4>
           {error && (
