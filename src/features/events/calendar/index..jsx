@@ -1,37 +1,38 @@
 import React, { useState } from 'react';
 import Loader from 'react-loader-spinner';
-import getUpcomingEvents from '../../../helpers/getUpcomingEvents';
+import getUpcomingEvents from '../../../services/getUpcomingEvents';
 import CalendarList from '../calendarList';
-// import config from '../../../config/config';
+import ErrorNotice from '../../../misc/ErrorNotice';
 
-// const initialState = [
-//   {
-//     id: 1,
-//     summary: 'eventDommie',
-//     htmlLink:
-//       'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
-//   },
-//   {
-//     id: 2,
-//     summary: 'eventDommie2',
-//     htmlLink:
-//       'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
-//   },
-// ];
+const initialState = [
+  {
+    id: 1,
+    summary: 'eventDommie',
+    htmlLink:
+      'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
+  },
+  {
+    id: 2,
+    summary: 'eventDommie2',
+    htmlLink:
+      'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
+  },
+];
 
 const Calendar = () => {
-  const [upcomingEvents, setUpcomingEvents] = useState();
+  const [upcomingEvents, setUpcomingEvents] = useState(initialState);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-  const getEventList = () => {
-    setLoading(true);
-    getUpcomingEvents().then((eventList) => {
-      setUpcomingEvents(eventList);
-      setLoading(false);
-    });
+  const handleClick = () => {
+    getUpcomingEvents(setUpcomingEvents, setLoading, setError);
   };
 
-  if (loading) {
+  if (error) {
+    return <ErrorNotice error={error} />;
+  }
+
+  if (loading === true) {
     return (
       <Loader
         type="ThreeDots"
@@ -45,8 +46,8 @@ const Calendar = () => {
 
   return (
     <div>
-      <button onClick={getEventList}>Get events</button>
-      {upcomingEvents && <CalendarList upcomingEvents={upcomingEvents} />}
+      <button onClick={handleClick}>Get events</button>
+      <CalendarList upcomingEvents={upcomingEvents} />
     </div>
   );
 };
