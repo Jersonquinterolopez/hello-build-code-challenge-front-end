@@ -7,7 +7,7 @@ const CalendarList = ({ upcomingEvents }) => {
       <ul>
         {upcomingEvents.map((eventItem) => {
           return (
-            <li key={eventItem.id}>
+            <li className="mb-5" key={eventItem.id}>
               <CalendarListItem eventItem={eventItem} />
             </li>
           );

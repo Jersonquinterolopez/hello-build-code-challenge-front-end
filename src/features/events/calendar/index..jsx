@@ -45,9 +45,15 @@ const Calendar = () => {
   }
 
   return (
-    <div>
-      <button onClick={handleClick}>Get events</button>
-      <CalendarList upcomingEvents={upcomingEvents} />
+    <div className="section">
+      <div className="container">
+        <div className="columns">
+          <button className="button is-primary" onClick={handleClick}>
+          Get events
+        </button>
+        <CalendarList upcomingEvents={upcomingEvents} />
+        </div>
+      </div>
     </div>
   );
 };
