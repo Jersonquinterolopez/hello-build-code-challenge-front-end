@@ -10,12 +10,15 @@ const initialState = [
     summary: 'eventDommie',
     htmlLink:
       'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
+    description: 'This is an example',
   },
+
   {
     id: 2,
     summary: 'eventDommie2',
     htmlLink:
       'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
+    description: 'This is an example',
   },
 ];
 
@@ -26,6 +29,11 @@ const Calendar = () => {
 
   const handleClick = () => {
     calendarApi.list.getUpcomingEvents(setUpcomingEvents, setLoading, setError);
+  };
+
+  const deleteEvent = async (eventId) => {
+    await calendarApi.remove.deleteOne(eventId);
+    await calendarApi.list.updateList(setUpcomingEvents, setLoading, setError);
   };
 
   if (error) {
@@ -51,7 +59,10 @@ const Calendar = () => {
           <button className="button is-primary" onClick={handleClick}>
             Get events
           </button>
-          <CalendarList upcomingEvents={upcomingEvents} />
+          <CalendarList
+            upcomingEvents={upcomingEvents}
+            deleteEvent={deleteEvent}
+          />
         </div>
       </div>
     </div>

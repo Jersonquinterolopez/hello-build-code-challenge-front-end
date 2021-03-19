@@ -1,8 +1,32 @@
 import moment from 'moment';
 const gapi = window.gapi;
+const currentDate = moment().format();
+const nextMonthDate = moment().add(1, 'month').format();
 
 const calendarApi = {
   list: {
+    async updateList(setUpcomingEvents, setLoading, setError) {
+      setLoading(true);
+
+      await gapi.client.calendar.events
+        .list({
+          calendarId: 'primary',
+          timeMin: currentDate,
+          timeMax: nextMonthDate,
+          showDeleted: false,
+          singleEvents: true,
+          maxResults: 30,
+          orderBy: 'startTime',
+        })
+        .then((response) => {
+          const events = response.result.items;
+          console.log('EVENTS: ', events);
+          setUpcomingEvents(events);
+          setLoading(false);
+          setError(false);
+        })
+        .catch((error) => setError(error));
+    },
     async getUpcomingEvents(setUpcomingEvents, setLoading, setError) {
       setLoading(true);
 
