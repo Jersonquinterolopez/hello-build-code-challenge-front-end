@@ -1,7 +1,12 @@
 import React from 'react';
 import Moment from 'moment';
+import calendarApi from '../../../services/calendarApi';
 
-function CalendarListItem({ eventItem }) {
+const CalendarListItem = ({ eventItem }) => {
+  const handleClick = () => {
+    calendarApi.remove.deleteOne(eventItem.id);
+  };
+
   return (
     <div className="column is-three-fifths is-offset-one-fifth">
       <div className="card">
@@ -25,13 +30,16 @@ function CalendarListItem({ eventItem }) {
           </div>
         </div>
         <footer className="card-footer">
-          <button className="button is-danger is-light card-footer-item">
-            Cancel
+          <button
+            onClick={handleClick}
+            className="button is-danger is-light card-footer-item"
+          >
+            Cancel Event
           </button>
         </footer>
       </div>
     </div>
   );
-}
+};
 
 export default CalendarListItem;

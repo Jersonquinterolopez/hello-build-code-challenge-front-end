@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Loader from 'react-loader-spinner';
-import getUpcomingEvents from '../../../services/getUpcomingEvents';
+import calendarApi from '../../../services/calendarApi';
 import CalendarList from '../calendarList';
 import ErrorNotice from '../../../misc/ErrorNotice';
 
@@ -25,7 +25,7 @@ const Calendar = () => {
   const [error, setError] = useState(false);
 
   const handleClick = () => {
-    getUpcomingEvents(setUpcomingEvents, setLoading, setError);
+    calendarApi.list.getUpcomingEvents(setUpcomingEvents, setLoading, setError);
   };
 
   if (error) {
@@ -49,9 +49,9 @@ const Calendar = () => {
       <div className="container">
         <div className="columns">
           <button className="button is-primary" onClick={handleClick}>
-          Get events
-        </button>
-        <CalendarList upcomingEvents={upcomingEvents} />
+            Get events
+          </button>
+          <CalendarList upcomingEvents={upcomingEvents} />
         </div>
       </div>
     </div>
