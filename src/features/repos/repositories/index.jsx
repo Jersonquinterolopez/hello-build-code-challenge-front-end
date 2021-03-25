@@ -15,12 +15,21 @@ const Repositories = () => {
 
   return (
     <div className="container">
-      <a href="http://localhost:5000/github/auth">
-        <button className="button is-primary is-light">Authorization</button>
-      </a>
-      <button className="button is-primary" onClick={handleClick}>
-        Get Repos
-      </button>
+      <div className="field is-grouped">
+        <p className="control">
+          <button className="button is-primary is-light">
+            <a href="http://localhost:5000/github/auth" />
+            Authorization
+          </button>
+        </p>
+
+        <p className="control">
+          <button className="button is-primary" onClick={handleClick}>
+            Get Repos
+          </button>
+        </p>
+      </div>
+
       <RepositorieList repos={repos} />
     </div>
   );
