@@ -1,5 +1,5 @@
 // import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import gitHubApi from '../../../services/githubApi';
 import RepositorieList from '../repositorieList';
 
@@ -14,7 +14,7 @@ const Repositories = () => {
   };
 
   return (
-    <div className="section">
+    <div className="container">
       <a href="http://localhost:5000/github/auth">
         <button className="button is-primary is-light">Authorization</button>
       </a>

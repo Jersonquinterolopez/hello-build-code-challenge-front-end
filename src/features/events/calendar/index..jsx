@@ -20,6 +20,27 @@ const initialState = [
       'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
     description: 'This is an example',
   },
+  {
+    id: 3,
+    summary: 'eventDommie2',
+    htmlLink:
+      'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
+    description: 'This is an example',
+  },
+  {
+    id: 4,
+    summary: 'eventDommie2',
+    htmlLink:
+      'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
+    description: 'This is an example',
+  },
+  {
+    id: 5,
+    summary: 'eventDommie2',
+    htmlLink:
+      'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
+    description: 'This is an example',
+  },
 ];
 
 const Calendar = () => {
@@ -53,12 +74,14 @@ const Calendar = () => {
   }
 
   return (
-    <div className="section">
-      <div className="container">
-        <div className="columns">
+    <div className="container">
+      <div className="columns is-multiline is-mobile">
+        <div className="column is-full">
           <button className="button is-primary" onClick={handleClick}>
             Get events
           </button>
+        </div>
+        <div className="column">
           <CalendarList
             upcomingEvents={upcomingEvents}
             deleteEvent={deleteEvent}

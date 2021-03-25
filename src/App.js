@@ -11,13 +11,10 @@ function App() {
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/sign-up" component={SignUp} />
-        <Route exact path="/dashboard" component={Dashboard} />
-        <Route exact path="/dashboard/calendar" component={Calendar} />
-        <Route
-          exact
-          path="/dashboard/github_section"
-          component={Repositories}
-        />
+        <Dashboard>
+          <Route path="/calendar" component={Calendar} />
+          <Route path="/github_section" component={Repositories} />
+        </Dashboard>
       </Switch>
     </BrowserRouter>
   );
