@@ -1,10 +1,15 @@
 import React from 'react';
-import Calendar from '../features/events/calendar/index.';
+import { Link } from 'react-router-dom';
 
 const Dashboard = (props) => {
   return (
-    <div>
-      <Calendar />
+    <div className="section">
+      <Link className="button is-info" to="/dashboard/calendar">
+        My Calendar
+      </Link>
+      <Link className="button is-dark" to="/dashboard/github_section">
+        My Repositories
+      </Link>
     </div>
   );
 };
