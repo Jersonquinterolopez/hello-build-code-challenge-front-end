@@ -4,47 +4,8 @@ import calendarApi from '../../../services/calendarApi';
 import CalendarList from '../calendarList';
 import ErrorNotice from '../../../misc/ErrorNotice';
 
-const initialState = [
-  {
-    id: 1,
-    summary: 'eventDommie',
-    htmlLink:
-      'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
-    description: 'This is an example',
-  },
-
-  {
-    id: 2,
-    summary: 'eventDommie2',
-    htmlLink:
-      'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
-    description: 'This is an example',
-  },
-  {
-    id: 3,
-    summary: 'eventDommie2',
-    htmlLink:
-      'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
-    description: 'This is an example',
-  },
-  {
-    id: 4,
-    summary: 'eventDommie2',
-    htmlLink:
-      'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
-    description: 'This is an example',
-  },
-  {
-    id: 5,
-    summary: 'eventDommie2',
-    htmlLink:
-      'https://www.google.com/calendar/event?eid=dWJnaXN1Y2Rrc2IyZGZia2U1MjhqN3MyZG9fMjAyMTAzMTVUMTYwMDAwWiBzb2xvcnNhbm9sb3BlekBt',
-    description: 'This is an example',
-  },
-];
-
 const Calendar = () => {
-  const [upcomingEvents, setUpcomingEvents] = useState(initialState);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
