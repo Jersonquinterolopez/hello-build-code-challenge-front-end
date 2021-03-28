@@ -1,11 +1,12 @@
 import moment from 'moment';
+import { types } from '../store/StoreReducer';
 const gapi = window.gapi;
 const currentDate = moment().format();
 const nextMonthDate = moment().add(1, 'month').format();
 
 const calendarApi = {
   list: {
-    async updateList(setUpcomingEvents, setLoading, setError) {
+    async updateList(dispatch, setLoading, setError) {
       await gapi.client.calendar.events
         .list({
           calendarId: 'primary',
@@ -19,18 +20,13 @@ const calendarApi = {
         .then((response) => {
           const events = response.result.items;
           console.log('EVENTS: ', events);
-          setUpcomingEvents(events);
+          dispatch({ type: types.getUpComingEvents, payload: events });
           setLoading(false);
           setError(false);
         })
         .catch((error) => setError(error));
     },
-    async getUpcomingEvents(
-      setUpcomingEvents,
-      setLoading,
-      setError,
-      setSessionData
-    ) {
+    async getUpcomingEvents(dispatch, setLoading, setError) {
       setLoading(true);
 
       const {
@@ -70,8 +66,7 @@ const calendarApi = {
           .then((response) => {
             const events = response.result.items;
             console.log('EVENTS: ', events);
-            setUpcomingEvents(events);
-            setSessionData(events);
+            dispatch({ type: types.getUpComingEvents, payload: events });
             setLoading(false);
             setError(false);
           })

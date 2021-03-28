@@ -3,18 +3,26 @@ import Loader from 'react-loader-spinner';
 import ErrorNotice from '../../../misc/ErrorNotice';
 import gitHubApi from '../../../services/githubApi';
 import RepositorieList from '../repositorieList';
+import { types } from '../../../store/StoreReducer';
+import { useDispatch, useStore } from '../../../store/StoreProvider';
 
 const Repositories = () => {
   const [loading, setLoading] = useState(false);
-  const [repos, setRepos] = useState([]);
   const [error, setError] = useState(false);
+
+  // global State
+  const { repos } = useStore();
+  const dispatch = useDispatch();
 
   const handleClick = (e) => {
     setLoading(true);
     e.preventDefault();
     gitHubApi.user.getRepos().then(
       (userRepos) => {
-        setRepos(userRepos);
+        dispatch({
+          type: types.getRepos,
+          payload: userRepos,
+        });
         setLoading(false);
       },
 

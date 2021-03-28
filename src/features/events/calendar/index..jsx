@@ -1,40 +1,27 @@
-import React, { useState, useContext, useEffect } from 'react';
-import DashboardContext from '../../../context/dashboardContext';
+import React, { useState } from 'react';
 import Loader from 'react-loader-spinner';
 import calendarApi from '../../../services/calendarApi';
 import CalendarList from '../calendarList';
 import ErrorNotice from '../../../misc/ErrorNotice';
-import { validateStates } from '../../../helpers/validateStates';
+import { useDispatch, useStore } from '../../../store/StoreProvider';
 
 const Calendar = () => {
-  const { sessionData, setSessionData } = useContext(DashboardContext);
-  const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  // global State
+  const { upcomingEvents } = useStore();
+  const dispatch = useDispatch();
+
   const handleClick = () => {
-    calendarApi.list.getUpcomingEvents(
-      setUpcomingEvents,
-      setLoading,
-      setError,
-      setSessionData
-    );
+    calendarApi.list.getUpcomingEvents(dispatch, setLoading, setError);
   };
 
   const deleteEvent = async (eventId) => {
     setLoading(true);
     await calendarApi.remove.deleteOne(eventId);
-    await calendarApi.list.updateList(setUpcomingEvents, setLoading, setError);
+    await calendarApi.list.updateList(dispatch, setLoading, setError);
   };
-
-  useEffect(() => {
-    validateStates(
-      sessionData,
-      upcomingEvents,
-      setSessionData,
-      setUpcomingEvents
-    );
-  }, [sessionData, setSessionData, upcomingEvents]);
 
   if (error) {
     return <ErrorNotice error={error} />;
