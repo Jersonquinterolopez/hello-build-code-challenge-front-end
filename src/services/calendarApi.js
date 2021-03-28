@@ -6,8 +6,6 @@ const nextMonthDate = moment().add(1, 'month').format();
 const calendarApi = {
   list: {
     async updateList(setUpcomingEvents, setLoading, setError) {
-      setLoading(true);
-
       await gapi.client.calendar.events
         .list({
           calendarId: 'primary',
@@ -27,7 +25,12 @@ const calendarApi = {
         })
         .catch((error) => setError(error));
     },
-    async getUpcomingEvents(setUpcomingEvents, setLoading, setError) {
+    async getUpcomingEvents(
+      setUpcomingEvents,
+      setLoading,
+      setError,
+      setSessionData
+    ) {
       setLoading(true);
 
       const {
@@ -68,6 +71,7 @@ const calendarApi = {
             const events = response.result.items;
             console.log('EVENTS: ', events);
             setUpcomingEvents(events);
+            setSessionData(events);
             setLoading(false);
             setError(false);
           })

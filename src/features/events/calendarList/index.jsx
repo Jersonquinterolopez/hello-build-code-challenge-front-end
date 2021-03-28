@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import CalendarListItem from '../calendarListItem';
 
-const CalendarList = ({ upcomingEvents, deleteEvent }) => {
+const CalendarList = memo(({ upcomingEvents, deleteEvent }) => {
   return (
     <div>
       <ul className="is-flex is-flex-wrap-wrap">
@@ -18,6 +18,6 @@ const CalendarList = ({ upcomingEvents, deleteEvent }) => {
       </ul>
     </div>
   );
-};
+});
 
 export default CalendarList;
