@@ -1,28 +1,41 @@
 import axios from 'axios';
 
-const getQueryParam = (param) => {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const parameter = urlParams.get(param);
-  return parameter;
-};
-
-const OAUTH_TOKEN = getQueryParam('token');
-
 const github = axios.create({
-  baseURL: 'https://api.github.com/',
-  headers: {
-    Authorization: `Token ${OAUTH_TOKEN}`,
-    Accept: 'application/vnd.github.v3+json',
-  },
+  baseURL: 'https://api.github.com',
+});
+
+const api = axios.create({
+  baseURL: 'http://localhost:5000/github',
 });
 
 // API CALLS
 const githubApi = {
   user: {
+    async codeExchange(code) {
+      const config = {
+        url: '/code-exchange',
+        params: {
+          code,
+        },
+        headers: {
+          Accept: 'application/json',
+        },
+      };
+      const response = await api(config);
+      const token = await response.data.token;
+      console.log(`token: ${token}`);
+      localStorage.setItem('githubapi-token', token);
+    },
     async getRepos() {
-      const endPoint = 'user/repos';
-      const response = await github(endPoint);
+      const OAUTH_TOKEN = localStorage.getItem('githubapi-token');
+      const config = {
+        url: '/user/repos',
+        headers: {
+          Authorization: `Token ${OAUTH_TOKEN}`,
+          Accept: 'application/vnd.github.v3+json',
+        },
+      };
+      const response = await github(config);
       const data = await response.data;
 
       console.log(data);

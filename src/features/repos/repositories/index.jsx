@@ -5,6 +5,7 @@ import gitHubApi from '../../../services/githubApi';
 import RepositorieList from '../repositorieList';
 import { types } from '../../../store/StoreReducer';
 import { useDispatch, useStore } from '../../../store/StoreProvider';
+import LoginGithub from 'react-login-github';
 
 const Repositories = () => {
   const [loading, setLoading] = useState(false);
@@ -14,22 +15,21 @@ const Repositories = () => {
   const { repos } = useStore();
   const dispatch = useDispatch();
 
-  const handleClick = (e) => {
+  const onSuccess = async (response) => {
     setLoading(true);
-    e.preventDefault();
-    gitHubApi.user.getRepos().then(
-      (userRepos) => {
-        dispatch({
-          type: types.getRepos,
-          payload: userRepos,
-        });
-        setLoading(false);
-      },
+    await gitHubApi.user.codeExchange(response.code);
+    const userRepos = await gitHubApi.user.getRepos();
 
-      (error) => {
-        setError(error);
-      }
-    );
+    dispatch({
+      type: types.getRepos,
+      payload: userRepos,
+    });
+    setLoading(false);
+  };
+
+  const onFailure = (response) => {
+    console.error(response);
+    setError(response);
   };
 
   if (error) {
@@ -51,21 +51,15 @@ const Repositories = () => {
   return (
     <div className="container">
       <div className="field is-grouped">
-        <p className="control">
-          <a href="http://localhost:5000/github/auth">
-            <button className="button is-primary is-light">
-              Authorization
-            </button>
-          </a>
-        </p>
-
-        <p className="control">
-          <button className="button is-primary" onClick={handleClick}>
-            Get Repos
-          </button>
-        </p>
+        <LoginGithub
+          clientId="9eb3d9c07c73ba916a54"
+          onSuccess={onSuccess}
+          onFailure={onFailure}
+          scope="repo"
+          className="button is-primary"
+          buttonText="Get my GitHub Repos"
+        />
       </div>
-
       <RepositorieList repos={repos} />
     </div>
   );
