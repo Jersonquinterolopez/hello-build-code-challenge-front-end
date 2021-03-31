@@ -3,6 +3,8 @@ const types = {
   authLogout: 'auth - logout',
   getRepos: 'repo - get repositories',
   getUpComingEvents: 'event - get upcoming events',
+  addFavorite: 'repo - add to favorites',
+  removeFavorite: 'repo - remove to favorites',
 };
 
 const initialStore = {
@@ -23,6 +25,7 @@ const initialStore = {
       url: 'https://facebook.github.io/flux/docs/overview',
     },
   ],
+  favoriteRepos: [],
 };
 
 const storeReducer = (state, action) => {
@@ -37,6 +40,22 @@ const storeReducer = (state, action) => {
       return {
         ...state,
         upcomingEvents: action.payload,
+      };
+
+    case types.addFavorite:
+      return {
+        ...state,
+        favoriteRepos: [...state.favoriteRepos, action.payload],
+      };
+
+    case types.removeFavorite:
+      return {
+        ...state,
+        favoriteRepos: [
+          ...state.favoriteRepos.filter(
+            (favorite) => favorite.id !== action.payload
+          ),
+        ],
       };
     default:
       return state;
