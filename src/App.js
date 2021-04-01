@@ -3,6 +3,7 @@ import Login from './features/authentication/Login';
 import SignUp from './features/authentication/SignUp';
 import Calendar from './features/events/calendar/index.';
 import Repositories from './features/repos/repositories';
+import UserProfile from './features/user/UserProfile';
 import Dashboard from './pages/Dashboard';
 import StoreProvider from './store/StoreProvider';
 
@@ -16,6 +17,7 @@ function App() {
           <Dashboard>
             <Route path="/calendar" component={Calendar} />
             <Route path="/github_section" component={Repositories} />
+            <Route path="/user-profile" component={UserProfile} />
           </Dashboard>
         </Switch>
       </StoreProvider>

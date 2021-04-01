@@ -6,7 +6,7 @@ const Dashboard = (props) => {
     <Fragment>
       <div className="section">
         <div className="columns">
-          <div className="column is-one-fifth">
+          <div className="column is-one-quarter">
             <Menu />
           </div>
 

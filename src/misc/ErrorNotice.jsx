@@ -1,10 +1,10 @@
 import React from 'react';
 
-const ErrorNotice = (props) => {
+const ErrorNotice = ({ message, clearError }) => {
   return (
     <div className="notification is-danger is-light">
-      <button className="delete" onClick={props.clearError}></button>
-      {props.message}
+      <button className="delete" onClick={clearError}></button>
+      {message}
     </div>
   );
 };

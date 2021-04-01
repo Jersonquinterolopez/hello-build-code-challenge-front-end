@@ -5,10 +5,18 @@ const types = {
   getUpComingEvents: 'event - get upcoming events',
   addFavorite: 'repo - add to favorites',
   removeFavorite: 'repo - remove to favorites',
+  updateUser: 'user - update user',
 };
 
 const initialStore = {
-  user: [{ id: 1, name: 'Jerson' }],
+  user: [
+    {
+      id: 1,
+      firstName: 'Jerson',
+      lastName: 'Quintero',
+      email: 'dev@jersonquintero.com',
+    },
+  ],
   upcomingEvents: [
     { id: 1, summary: 'TestEvent1' },
     { id: 2, summary: 'TestEvent2' },
@@ -57,6 +65,17 @@ const storeReducer = (state, action) => {
           ),
         ],
       };
+    case types.updateUser:
+      return {
+        ...state,
+        user: [action.payload],
+      };
+    case types.authLogin:
+      return {
+        ...state,
+        user: [action.payload],
+      };
+
     default:
       return state;
   }
