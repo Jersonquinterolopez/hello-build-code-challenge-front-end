@@ -2,9 +2,10 @@ import React from 'react';
 import { useDispatch, useStore } from '../../../store/StoreProvider';
 import AccessInfo from '../AccessInfo';
 import CalendarEntries from '../CalendarEntries';
+import FavoriteRepos from '../FavoriteRepos';
 
 const UserProfile = () => {
-  const { user, upcomingEvents } = useStore();
+  const { user, upcomingEvents, favoriteRepos } = useStore();
   const dispatch = useDispatch();
 
   return (
@@ -16,10 +17,13 @@ const UserProfile = () => {
         <div className="column">
           <CalendarEntries upcomingEvents={upcomingEvents} />
         </div>
+
+        <div className="column">
+          <FavoriteRepos favoriteRepos={favoriteRepos} />
+        </div>
       </div>
 
       {/* list favorites and send it to the database */}
-      {/* <FavoriteRepos favoriteRepos={favoriteRepos} /> */}
     </div>
   );
 };

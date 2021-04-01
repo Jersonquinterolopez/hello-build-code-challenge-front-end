@@ -33,7 +33,18 @@ const initialStore = {
       url: 'https://facebook.github.io/flux/docs/overview',
     },
   ],
-  favoriteRepos: [],
+  favoriteRepos: [
+    {
+      id: 1,
+      name: 'Repo #1',
+      url: 'https://facebook.github.io/flux/docs/overview',
+    },
+    {
+      id: 2,
+      name: 'Repo #2',
+      url: 'https://facebook.github.io/flux/docs/overview',
+    },
+  ],
 };
 
 const storeReducer = (state, action) => {
