@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import githubApi from '../../../services/githubApi';
 import { useDispatch, useStore } from '../../../store/StoreProvider';
+import { types } from '../../../store/StoreReducer';
 import AccessInfo from '../AccessInfo';
 import CalendarEntries from '../CalendarEntries';
 import FavoriteRepos from '../FavoriteRepos';
@@ -7,6 +9,15 @@ import FavoriteRepos from '../FavoriteRepos';
 const UserProfile = () => {
   const { user, upcomingEvents, favoriteRepos } = useStore();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    githubApi.user.getFavoriteRepos().then((repos) =>
+      dispatch({
+        type: types.getFavoriteRepos,
+        payload: repos,
+      })
+    );
+  }, [dispatch]);
 
   return (
     <div className="section">
@@ -22,8 +33,6 @@ const UserProfile = () => {
           <FavoriteRepos favoriteRepos={favoriteRepos} />
         </div>
       </div>
-
-      {/* list favorites and send it to the database */}
     </div>
   );
 };

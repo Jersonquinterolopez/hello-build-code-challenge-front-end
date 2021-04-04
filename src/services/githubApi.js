@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 const github = axios.create({
   baseURL: 'https://api.github.com',
 });
@@ -39,6 +38,62 @@ const githubApi = {
       const data = await response.data;
 
       console.log(data);
+      return data;
+    },
+    async addFavorite(repo) {
+      let token = localStorage.getItem('x-auth-token');
+      const config = {
+        method: 'POST',
+        data: {
+          repo: repo,
+        },
+        url: '/add-to-favorite',
+        headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
+      };
+
+      const response = await api(config);
+      const data = await response.data;
+
+      return data;
+    },
+    async removeFavorite(repoId) {
+      let token = localStorage.getItem('x-auth-token');
+      const config = {
+        method: 'DELETE',
+        url: `/delete/${repoId}`,
+        headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
+      };
+
+      await api(config);
+    },
+    async getFavoriteRepos() {
+      let token = localStorage.getItem('x-auth-token');
+      const config = {
+        method: 'GET',
+        url: '/favorite-repos',
+        headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
+      };
+
+      const response = await api(config);
+      const data = await response.data;
+
+      return data;
+    },
+
+    async findFavoriteRepo(repoName) {
+      let token = localStorage.getItem('x-auth-token');
+      const config = {
+        method: 'POST',
+        url: `/find-repo`,
+        headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
+        data: {
+          name: repoName,
+        },
+      };
+
+      const response = await api(config);
+      const data = await response.data;
+
       return data;
     },
   },

@@ -52,7 +52,7 @@ const Repositories = () => {
     <div className="container">
       <div className="field is-grouped">
         <LoginGithub
-          clientId="9eb3d9c07c73ba916a54"
+          clientId={process.env.REACT_APP_GITHUB_API_CLIENT_ID}
           onSuccess={onSuccess}
           onFailure={onFailure}
           scope="repo"

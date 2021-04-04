@@ -1,35 +1,37 @@
 import React, { Fragment } from 'react';
-import { useDispatch, useStore } from '../../store/StoreProvider';
+import githubApi from '../../services/githubApi';
+import { useDispatch } from '../../store/StoreProvider';
 import { types } from '../../store/StoreReducer';
 
 const AddToFavorites = ({ repo }) => {
   const dispatch = useDispatch();
-  const { favoriteRepos } = useStore();
+  const repoId = repo.id;
+  const repoName = repo.name;
 
-  const invertColor = () => {
-    const element = document.getElementById(repo.id);
+  const invertColor = (repoId) => {
+    const element = document.getElementById(repoId);
     element.classList.contains('is-inverted')
       ? element.classList.remove('is-inverted')
       : element.classList.add('is-inverted');
   };
 
-  const toggleFavAction = (repo) => {
-    const isFavoriteAdded = favoriteRepos.filter((favorite) => {
-      return favorite.id === repo?.id;
-    });
-    const result = isFavoriteAdded.length > 0 ? isFavoriteAdded[0] : null;
+  const toggleFavAction = async (repoName, repoId) => {
+    const isFavorite = await githubApi.user.findFavoriteRepo(repoName);
+    invertColor(repoId);
 
-    if (result === null) {
-      invertColor();
+    if (isFavorite) {
+      await githubApi.user.removeFavorite(repoId);
+      const updatedFavoriteList = await githubApi.user.getFavoriteRepos();
       dispatch({
-        type: types.addFavorite,
-        payload: repo,
+        type: types.updateFavoriteRepos,
+        payload: updatedFavoriteList,
       });
     } else {
-      invertColor();
+      await githubApi.user.addFavorite(repo);
+      const updatedFavoriteList = await githubApi.user.getFavoriteRepos();
       dispatch({
-        type: types.removeFavorite,
-        payload: repo?.id,
+        type: types.updateFavoriteRepos,
+        payload: updatedFavoriteList,
       });
     }
   };
@@ -37,10 +39,10 @@ const AddToFavorites = ({ repo }) => {
   return (
     <Fragment>
       <button
-        id={repo.id}
-        className="button is-primary is-small"
+        id={repoId}
+        className="button is-primary is-inverted is-small"
         type="button"
-        onClick={() => toggleFavAction(repo)}
+        onClick={() => toggleFavAction(repoName, repoId)}
       >
         <span className="icon is-small">
           <i className="fas fa-heart"></i>
