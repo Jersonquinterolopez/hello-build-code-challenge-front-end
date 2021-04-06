@@ -29,7 +29,7 @@ const Login = () => {
       });
       localStorage.setItem('user', JSON.stringify(loginResponse.data.user));
       localStorage.setItem('x-auth-token', loginResponse.data.token);
-      history.push('/');
+      history.push('/user-profile');
     } catch (error) {
       error.response.data.msg && setError(error.response.data.msg);
     }

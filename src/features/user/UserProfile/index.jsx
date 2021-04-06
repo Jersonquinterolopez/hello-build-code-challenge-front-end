@@ -23,7 +23,7 @@ const UserProfile = () => {
     <div className="section">
       <div className="columns">
         <div className="column">
-          <AccessInfo user={user} dispatch={dispatch} />
+          {user.length === 1 && <AccessInfo user={user} dispatch={dispatch} />}
         </div>
         <div className="column">
           <CalendarEntries upcomingEvents={upcomingEvents} />

@@ -8,7 +8,7 @@ const PublicRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) => {
         if (isAuth) {
-          return <Redirect to="/" />;
+          return <Redirect to="/user-profile" />;
         } else {
           return <Component {...rest} {...props} />;
         }
