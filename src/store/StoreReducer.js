@@ -9,30 +9,9 @@ const types = {
 };
 
 const initialStore = {
-  user: [
-    {
-      id: 1,
-      firstName: 'Jerson',
-      lastName: 'Quintero',
-      email: 'dev@jersonquintero.com',
-    },
-  ],
-  upcomingEvents: [
-    { id: 1, summary: 'TestEvent1' },
-    { id: 2, summary: 'TestEvent2' },
-  ],
-  repos: [
-    {
-      id: 1,
-      name: 'Repo #1',
-      url: 'https://facebook.github.io/flux/docs/overview',
-    },
-    {
-      id: 2,
-      name: 'Repo #2',
-      url: 'https://facebook.github.io/flux/docs/overview',
-    },
-  ],
+  user: [],
+  upcomingEvents: [],
+  repos: [],
   favoriteRepos: [],
 };
 
@@ -71,6 +50,14 @@ const storeReducer = (state, action) => {
       return {
         ...state,
         user: [action.payload],
+      };
+
+    case types.authLogout:
+      return {
+        user: [],
+        upcomingEvents: [],
+        repos: [],
+        favoriteRepos: [],
       };
 
     default:

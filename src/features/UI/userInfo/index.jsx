@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useStore } from '../../../store/StoreProvider';
 
-const UserInfo = () => {
-  const { user } = useStore();
-  const { firstName, email, lastName } = user[0];
+const UserInfo = ({ user }) => {
+  const { firstName, lastName, email } = user[0];
 
   return (
     <div>

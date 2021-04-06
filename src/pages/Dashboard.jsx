@@ -1,7 +1,15 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Menu from '../features/UI/menu';
+import { checkLoggedIn } from '../services/checkLoggedIn';
+import { useDispatch } from '../store/StoreProvider';
 
 const Dashboard = (props) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    checkLoggedIn(dispatch);
+  }, [dispatch]);
+
   return (
     <Fragment>
       <div className="section">
