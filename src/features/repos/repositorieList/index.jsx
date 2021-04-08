@@ -18,13 +18,19 @@ const RepositorieList = ({ repos }) => {
         <span className="is-active">All</span>
       </p>
       <ul>
-        {filteredItems.map((repo) => {
-          return (
-            <li key={repo.id}>
-              <RepositorieListItem repo={repo} />
-            </li>
-          );
-        })}
+        {filteredItems.length >= 1 ? (
+          filteredItems.map((repo) => {
+            return (
+              <li key={repo.id}>
+                <RepositorieListItem repo={repo} />
+              </li>
+            );
+          })
+        ) : (
+          <p className="mt-4">
+            No repos found! Click the button to get your repos.
+          </p>
+        )}
       </ul>
     </div>
   );

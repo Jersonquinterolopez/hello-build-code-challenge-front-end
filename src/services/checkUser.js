@@ -2,9 +2,18 @@ import api from '../helpers/axios';
 
 const checkUser = async (value) => {
   try {
-    const checkUserResponse = await api.post('/auth/check-user', {
-      email: value,
-    });
+    const config = {
+      method: 'post',
+      url: '/auth/check-user',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      data: {
+        email: value,
+      },
+    };
+    const checkUserResponse = await api(config);
     const userStatus = await checkUserResponse.data;
     return userStatus;
   } catch (error) {

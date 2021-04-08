@@ -33,9 +33,7 @@ const UserProfile = () => {
         </div>
 
         <div className="column">
-          {favoriteRepos.length >= 1 && (
-            <FavoriteRepos favoriteRepos={favoriteRepos} />
-          )}
+          <FavoriteRepos favoriteRepos={favoriteRepos} />
         </div>
       </div>
     </div>

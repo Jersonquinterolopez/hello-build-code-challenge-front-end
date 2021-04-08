@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import api from '../../../helpers/axios';
 import ErrorNotice from '../../../misc/ErrorNotice';
+import { useDispatch } from '../../../store/StoreProvider';
+import { types } from '../../../store/StoreReducer';
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const { register, handleSubmit, errors, formState, getValues } = useForm({
     mode: 'onBlur',
   });
@@ -20,8 +24,13 @@ const SignUp = () => {
         email,
         password,
       });
+      dispatch({
+        type: types.authLogin,
+        payload: loginResponse.data.user,
+      });
       localStorage.setItem('user', JSON.stringify(loginResponse.data.user));
-      localStorage.setItem('token', JSON.stringify(loginResponse.data.token));
+      localStorage.setItem('x-auth-token', loginResponse.data.token);
+      history.push('/user-profile');
     } catch (error) {
       error.response.data.msg && setError(error.response.data.msg);
     }

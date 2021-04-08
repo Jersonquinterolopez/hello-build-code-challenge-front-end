@@ -11,13 +11,17 @@ const FavoriteRepos = ({ favoriteRepos }) => {
         <span className="is-active">Favorites</span>
       </p>
       <ul>
-        {favoriteRepos.map((repo) => {
-          return (
-            <li key={repo.id}>
-              <RepositorieListItem repo={repo} />
-            </li>
-          );
-        })}
+        {favoriteRepos.length >= 1 ? (
+          favoriteRepos.map((repo) => {
+            return (
+              <li key={repo.id}>
+                <RepositorieListItem repo={repo} />
+              </li>
+            );
+          })
+        ) : (
+          <p className="mt-4">No favorite repos found!</p>
+        )}
       </ul>
     </div>
   );

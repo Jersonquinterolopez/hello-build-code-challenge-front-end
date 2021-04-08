@@ -1,10 +1,12 @@
 import axios from 'axios';
+import config from '../config/config';
+
 const github = axios.create({
   baseURL: 'https://api.github.com',
 });
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/github',
+  baseURL: `${config.apiUrl}/github`,
 });
 
 // API CALLS
